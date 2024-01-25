@@ -46,17 +46,17 @@ This report presents an analysis of residuals in Simple Linear Regression, utili
 	
 	\section{Data Description}
 	
-Anscombe's Quartet is a dataset constructed in 1937 by the statistician Francis Anscombe \citep{Anscombe1973}. It serves as a compelling illustration of the critical role that data visualization plays in analysis. This dataset emphasizes the impact of outliers and influential observations on statistical characteristics, underscoring the limitations of relying solely on summary statistics without considering the underlying data distribution.
+Anscombe's Quartet is a dataset constructed in 1973 by the statistician Francis Anscombe \citep{Anscombe1973}. It serves as a compelling illustration of the critical role that data visualization plays in analysis. This dataset emphasizes the impact of outliers and influential observations on statistical characteristics, underscoring the limitations of relying solely on summary statistics without considering the underlying data distribution.
 
-	
+The scatter plot in Figure~\ref{Fig:anscombe} illustrates datasets 1 through 4 with their respective fitted lines. Each dataset consists of $n=11$ data points, resulting in identical sample summary statistics, including the mean values of $x$ ($\overline{x} = 9.00$) and $y$ ($\overline{y} = 7.50$), the variances of $x$ ($\text{Var}(x) = 11.0$) and $y$ ($\text{Var}(y) = 4.1$), as well as the covariance of $x$ and $y$ ($\text{Cov}\left(x,y\right)=5.5$). Despite these consistent statistical measures, the scatter plots exhibit distinct visual patterns, highlighting the nuanced differences inherent in each dataset.
+
 \begin{figure}[htbp]
 \includegraphics[width=.7\textwidth]{anscombe.png}
 \centering
-\caption{Scatter plot and linear regression line of Anscombe's Quartet dataset}
+\caption{A Comparative Visualization of Anscombe's Quartet: Scatter Plots and Fitted Lines for Datasets 1-4.}
 \label{Fig:anscombe}
 \end{figure}
 
-Figure \ref{Fig:anscombe} gives the scatter plot of dataset 1-4 with the fitted line.
 
 	\section{Simple Linear Regression}
 
@@ -64,20 +64,24 @@ Figure \ref{Fig:anscombe} gives the scatter plot of dataset 1-4 with the fitted 
 %
 %We have $V\left( \tilde{\mu_i} \right)  = \sigma^2 \left( \frac{1}{n}+\frac{\left( x_i - \overline{x} \right) ^2}{S_{xx}} \right) $
 
-	We use linear model 
-	$\hat{\mathbf{y}} = \mathbf{X}\hat{\mathbf{b}}$  
-	to fit the four groups of data, where 
-	$\hat{\mathbf{b}} = (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}$,
-	and $\mathbf{X} = [\mathbf{1}, \mathbf{x}]$, $\mathbf{x}$ is the regressor of each group of data. 
-	Rewriting $\hat{\mathbf{b}}$ in scalar form: 
-	$\hat{\mathbf{b}} = \left( b_0,b_1 \right)^T $,
-	where $b_1 = \frac{S_{xy}}{S_{xx}} = \frac{\text{Cov}(\mathbf{x},\mathbf{y})}{\text{V}(\mathbf{x})}$ 
-	and $b_0 = \overline{y} - b_1 \overline{x}$. 
-	The coefficient of determination $R^2 =1-\frac{\text{SSR}}{\text{SST}} = 1 - \frac{\rVert \mathbf{y} - \hat{\mathbf{y}}\rVert^2}{\rVert \mathbf{y} - \overline{y}\cdot\mathbf{1}\rVert^2} $
+%	We use linear model 
+%	$\hat{\mathbf{y}} = \mathbf{X}\hat{\mathbf{b}}$  
+%	to fit the four groups of data, where 
+%	$\hat{\mathbf{b}} = (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}$,
+%	and $\mathbf{X} = [\mathbf{1}, \mathbf{x}]$, $\mathbf{x}$ is the regressor of each group of data. 
+%	Rewriting $\hat{\mathbf{b}}$ in scalar form: 
+%	$\hat{\mathbf{b}} = \left( b_0,b_1 \right)^T $,
+%	where $b_1 = \frac{S_{xy}}{S_{xx}} = \frac{\text{Cov}(\mathbf{x},\mathbf{y})}{\text{V}(\mathbf{x})}$ 
+%	and $b_0 = \overline{y} - b_1 \overline{x}$. 
+%	The coefficient of determination $R^2 =1-\frac{\text{SSR}}{\text{SST}} = 1 - \frac{\rVert \mathbf{y} - \hat{\mathbf{y}}\rVert^2}{\rVert \mathbf{y} - \overline{y}\cdot\mathbf{1}\rVert^2} $.
+%	The calculation results are shown in Table~\ref{tab:1}.
+
+We employ a simple linear model, denoted as $\hat{\mathbf{y}} = \mathbf{X}\hat{\mathbf{b}}$, to fit the four distinct datasets. Here, the parameter vector $\hat{\mathbf{b}}$ is determined using the formula $\hat{\mathbf{b}} = (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}$, with $\mathbf{X} = [\mathbf{1}, \mathbf{x}]$ and $\mathbf{x}$ representing the regressor for each dataset. Expressing $\hat{\mathbf{b}}$ in scalar form as $\hat{\mathbf{b}} = \left( b_0,b_1 \right)^T$, we know that $b_1 = \frac{S_{xy}}{S_{xx}} = \frac{\text{Cov}(\mathbf{x},\mathbf{y})}{\text{V}(\mathbf{x})}$ and $b_0 = \overline{y} - b_1 \overline{x}$. The coefficient of determination is computed as $R^2 = 1-\frac{\text{SSR}}{\text{SST}} = 1 - \frac{\rVert \mathbf{y} - \hat{\mathbf{y}}\rVert^2}{\rVert \mathbf{y} - \overline{y}\cdot\mathbf{1}\rVert^2}$. 
+
+Detailed calculation results are available in Table~\ref{tab:1}. Notably, it is observed that all four models yield identical parameters and $R^2$ values. This observation is not surprising, given that the mean, variance, and covariance of both $x$ and $y$ across each dataset are the same.
 
 	\begin{table}[htpb]
 		\centering
-		\label{tab:1}
 		\begin{tabular}{|c|c|c|c|c|}
 			\hline
 			 & 1 & 2 & 3 & 4  \\
@@ -90,11 +94,21 @@ Figure \ref{Fig:anscombe} gives the scatter plot of dataset 1-4 with the fitted 
 			\hline
 
 		\end{tabular}
-		\caption{simple linear model of 4 groups of data}
+		\caption{Simple Linear Regression model parameters $b_0, b_1$ and the coefficient of determination $R^2$ for Datasets 1-4.}
+		\label{tab:1}
 	\end{table}
 
+
+%	$S_{xx} = \sum \left( x_i - \overline{x} \right)^2 $,
+%	$S_{xy} = \sum \left( x_i - \overline{x} \right)\left( y_i - \overline{y} \right) $
+
+	
+	\section{Residuals Analysis}
+	
 	The mean of residuals are 0 for all four datasets; 
 	The variance of residuals are 1.37 for all four datasets; 
+		
+
 
 
 \begin{figure}[htbp]
@@ -124,15 +138,6 @@ Figure \ref{Fig:anscombe} gives the scatter plot of dataset 1-4 with the fitted 
 \caption{Residuals vs Leverage plots}
 \label{Fig:RVL}
 \end{figure}
-
-%	$S_{xx} = \sum \left( x_i - \overline{x} \right)^2 $,
-%	$S_{xy} = \sum \left( x_i - \overline{x} \right)\left( y_i - \overline{y} \right) $
-
-	
-
-	\section{Residuals Analysis}
-	
-		
 	\bibliography{cite}
 
 	
