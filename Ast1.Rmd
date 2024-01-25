@@ -1,6 +1,6 @@
 ---
 title: "Assignment1: The Three-Body Problem"
-author: "Hao"
+author: "cijsp"
 date: "2024-01-21"
 output: html_document
 ---
@@ -17,6 +17,10 @@ lmod1 <- lm(y1~x1,anscombe)
 lmod2 <- lm(y2~x2,anscombe)
 lmod3 <- lm(y3~x3,anscombe)
 lmod4 <- lm(y4~x4,anscombe)
+cov(anscombe$x1,anscombe$y1)
+cov(anscombe$x2,anscombe$y2)
+cov(anscombe$x3,anscombe$y3)
+cov(anscombe$x4,anscombe$y4)
 ```
 
 ```{r}
