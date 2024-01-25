@@ -70,10 +70,10 @@ grid.arrange(grobs = list(plot1, plot2, plot3, plot4), ncol = 2, top = "Anscombe
 ```
 
 ```{r}
-histplot1  <- ggplot(anscombe,aes(x=residuals(lmod1)))+geom_histogram()+labs(x="r1")
-histplot2  <- ggplot(anscombe,aes(x=residuals(lmod2)))+geom_histogram()+labs(x="r2")
-histplot3  <- ggplot(anscombe,aes(x=residuals(lmod3)))+geom_histogram()+labs(x="r3")
-histplot4  <- ggplot(anscombe,aes(x=residuals(lmod4)))+geom_histogram()+labs(x="r4")
+histplot1  <- ggplot(anscombe,aes(x=residuals(lmod1)))+geom_histogram()+labs(x="r1") + xlim(-3.4,3.4) + ylim(0,3)
+histplot2  <- ggplot(anscombe,aes(x=residuals(lmod2)))+geom_histogram()+labs(x="r2") + xlim(-3.4,3.4) + ylim(0,3)
+histplot3  <- ggplot(anscombe,aes(x=residuals(lmod3)))+geom_histogram()+labs(x="r3") + xlim(-3.4,3.4) + ylim(0,3)
+histplot4  <- ggplot(anscombe,aes(x=residuals(lmod4)))+geom_histogram()+labs(x="r4") + xlim(-3.4,3.4) + ylim(0,3)
 
 grid.arrange(grobs = list(histplot1, histplot2, histplot3, histplot4), ncol = 2, top = "Histogram of Residuals")
 ```
@@ -81,21 +81,25 @@ grid.arrange(grobs = list(histplot1, histplot2, histplot3, histplot4), ncol = 2,
 ```{r}
 rvfplot1  <- ggplot(anscombe,aes(x=predict(lmod1),y=residuals(lmod1))) + 
 		     geom_point()+ 
-		     coord_fixed(xlim = c(3.5, 11.5),ylim = c(-3,4)) +
-		     labs(x="fitted",y="residuals")
+		     geom_hline(yintercept = 0, linetype = "dashed", color = "red") + 
+		     coord_fixed(xlim = c(4.5, 12.5),ylim = c(-4,4)) +
+		     labs(x="y1 fitted",y="y1 residuals")
 rvfplot2  <- ggplot(anscombe,aes(x=predict(lmod2),y=residuals(lmod2))) + 
 		     geom_point()+ 
-		     coord_fixed(xlim = c(3.5, 11.5),ylim = c(-3,4)) +
-		     labs(x="fitted",y="residuals")
+		     geom_hline(yintercept = 0, linetype = "dashed", color = "red") + 
+		     coord_fixed(xlim = c(4.5, 12.5),ylim = c(-4,4)) +
+		     labs(x="y2 fitted",y="y2 residuals")
 rvfplot3  <- ggplot(anscombe,aes(x=predict(lmod3),y=residuals(lmod3))) + 
 		     geom_point()+ 
-		     coord_fixed(xlim = c(3.5, 11.5),ylim = c(-3,4)) +
-		     labs(x="fitted",y="residuals")
+		     geom_hline(yintercept = 0, linetype = "dashed", color = "red") + 
+		     coord_fixed(xlim = c(4.5, 12.5),ylim = c(-4,4)) +
+		     labs(x="y3 fitted",y="y3 residuals")
 rvfplot4  <- ggplot(anscombe,aes(x=predict(lmod4),y=residuals(lmod4))) + 
 		     geom_point()+ 
-		     coord_fixed(xlim = c(3.5, 11.5),ylim = c(-3,4)) +
-		     labs(x="fitted",y="residuals")
-grid.arrange(grobs = list(rvfplot1, rvfplot2, rvfplot3, rvfplot4), ncol = 2, top = "Residuals vs fitted values")
+		     geom_hline(yintercept = 0, linetype = "dashed", color = "red") + 
+		     coord_fixed(xlim = c(4.5, 12.5),ylim = c(-4,4)) +
+		     labs(x="y4 fitted",y="y4 residuals")
+grid.arrange(grobs = list(rvfplot1, rvfplot2, rvfplot3, rvfplot4), ncol = 2, top = "Residuals vs Fitted Values Plots")
 ```
 ```{r}
 #mean(residuals(lmod1) <=residuals(lmod1))
@@ -168,20 +172,66 @@ ggplot() +
 rqqplot1 <- ggplot() + 
 	geom_qq(aes(sample = rstandard(lmod1))) + 
 	geom_abline(color = "red") + 
+	labs(x = "Normal theoretical", y = "y1 sample")+
 	coord_fixed(xlim = c(-3, 3),ylim = c(-3,3))
 rqqplot2 <- ggplot() + 
 	geom_qq(aes(sample = rstandard(lmod2))) + 
 	geom_abline(color = "red") + 
+	labs(x = "Normal theoretical", y = "y2 sample")+
 	coord_fixed(xlim = c(-3, 3),ylim = c(-3,3))
 rqqplot3 <- ggplot() + 
 	geom_qq(aes(sample = rstandard(lmod3))) + 
 	geom_abline(color = "red") + 
+	labs(x = "Normal theoretical", y = "y3 sample")+
 	coord_fixed(xlim = c(-3, 3),ylim = c(-3,3))
 rqqplot4 <- ggplot() + 
 	geom_qq(aes(sample = rstandard(lmod4))) + 
 	geom_abline(color = "red") + 
+	labs(x = "Normal theoretical", y = "y4 sample")+
 	coord_fixed(xlim = c(-3, 3),ylim = c(-3,3))
 grid.arrange(grobs = list(rqqplot1, rqqplot2, rqqplot3, rqqplot4), ncol = 2, top = "Q-Q plots")
 ```
+
+```{r}
+
+dfrl1 <- data.frame(Residuals = residuals(lmod1), Leverage = hatvalues(lmod1))
+dfrl2 <- data.frame(Residuals = residuals(lmod2), Leverage = hatvalues(lmod2))
+dfrl3 <- data.frame(Residuals = residuals(lmod3), Leverage = hatvalues(lmod3))
+dfrl4 <- data.frame(Residuals = residuals(lmod4), Leverage = hatvalues(lmod4))
+
+dfrlplot1 <- ggplot(dfrl1, aes(x = Leverage, y = Residuals)) + 
+	geom_point(alpha = 0.5) + 
+	geom_hline(yintercept = 0, linetype = "dashed", color = "red") + 
+	xlim(0, 1) + ylim(-2,3.3) +
+	labs(x = "Leverage", y = "y1 Residuals")
+dfrlplot2 <- ggplot(dfrl2, aes(x = Leverage, y = Residuals)) + 
+	geom_point(alpha = 0.5) + 
+	geom_hline(yintercept = 0, linetype = "dashed", color = "red") + 
+	xlim(0, 1) + ylim(-2,3.3) +
+	labs(x = "Leverage", y = "y2 Residuals")
+dfrlplot3 <- ggplot(dfrl3, aes(x = Leverage, y = Residuals)) + 
+	geom_point(alpha = 0.5) + 
+	geom_hline(yintercept = 0, linetype = "dashed", color = "red") + 
+	xlim(0, 1) + ylim(-2,3.3) +
+	labs(x = "Leverage", y = "y3 Residuals")
+dfrlplot4 <- ggplot(dfrl4, aes(x = Leverage, y = Residuals)) + 
+	geom_point(alpha = 0.5) + 
+	geom_hline(yintercept = 0, linetype = "dashed", color = "red") + 
+	xlim(0, 1) + ylim(-2,3.3) +
+	labs(x = "Leverage", y = "y4 Residuals")
+grid.arrange(grobs = list(dfrlplot1, dfrlplot2, dfrlplot3, dfrlplot4), ncol = 2, top = "Residuals - Leverage plots")
+#res1 <- residuals(lmod1)
+#res2 <- residuals(lmod2)
+#res3 <- residuals(lmod3)
+#res4 <- residuals(lmod4)
+#lev1 <- hatvalues(lmod1)
+#lev2 <- hatvalues(lmod2)
+#lev3 <- hatvalues(lmod3)
+#lev4 <- hatvalues(lmod4)
+# plot(lev2, res2, main = "Residuals vs Leverage Plot", xlab = "Leverage", ylab = "Residuals")
+# abline(h = 0, col = "red", lty = 2)
+# identify(lev2, res2, row.names(anscombe), cex = 0.7)
+```
+
 
 
