@@ -1,0 +1,120 @@
+\documentclass[12pt]{article}
+
+\usepackage[margin=1in]{geometry}
+	%changes default margins
+
+\usepackage{setspace}
+\doublespacing
+	%\singlespacing,\onehalfspacing,\doublespacing can be set and everything thereafter will use that spacing. You can switch within the document as often as you wish
+	
+\usepackage{parskip}
+%changes paragraphs to have an extra space and new indentation with paragraphs, rather than indenting every new paragraph. This is completely a stylistic choice and neither is better than the other.
+
+
+\usepackage{mathtools,amssymb} %useful math stuff. there are a lot of ams* packages. If you have a math need, it's probably in there
+
+	
+	
+%\usepackage{natbib}
+%\usepackage{biblatex} %natbib is older and available from almost all journals, biblatex is not, but biblatex has more flexibility and options.
+
+%\usepackage[natbib=true]{biblatex} %this often works and requires minimal changes 
+
+%for biblatex you write \textcite{citekey} and \parencite{citekey}
+%for natbib you write \citet{citekey} and \citep{citekey}. Please avoid using \cite{} since you won't control whether it's parenthetical, but you are responsible for whether you use something in text or parenthetically.
+%for \usepackage[natbib=true]{biblatex} you follow the natbib style and you won't have to perform search/replaces in your document, you would only need to change the package call and bibliography call.
+
+\usepackage{natbib}
+\bibliographystyle{chicago}
+
+%other useful packages
+% \usepackage{graphicx} %for including images including pdf
+
+
+
+\title{As1: The Three-Body Problem}
+\author{cijsp}
+\date{\today}
+
+
+
+\begin{document}
+	
+	\maketitle
+	
+	
+	\section{Introduction}
+
+This report is an analysis on residuals of Simple Linear Regression based on Anscombe's Quartet dataset. The parameters of the linear model is calculated from maximum likelihood first, the residuals of each dataset is then analyzed.
+	%Sentence 1 and/or 2 should very broadly describe a problem that anyone can understand. Sentence 2 or 3 should narrow down the scope of the previous sentence to something that any of the other data science students can understand. By sentence 3 or 4, you should be introducing the problem that you are going to be discussing.
+	
+	
+	\section{Data Description}
+	
+Anscombe's Quartet is a dataset constructed in 1937 by the statistician Francis Anscombe \citep{Anscombe1973}. It serves as a compelling illustration of the critical role that data visualization plays in analysis. This dataset emphasizes the impact of outliers and influential observations on statistical characteristics, underscoring the limitations of relying solely on summary statistics without considering the underlying data distribution.
+	
+	\section{Simple Linear Regression}
+
+%Let $S_{xx} = \sum\left( x_{i} - \overline{x} \right) ^2$, and let $\tilde{\mu_i} = \tilde{b_{0}} + \tilde{b_1}x_i$ be the estimator for the fitted value for the linear model $\mathbf{y = X b}$.
+%
+%We have $V\left( \tilde{\mu_i} \right)  = \sigma^2 \left( \frac{1}{n}+\frac{\left( x_i - \overline{x} \right) ^2}{S_{xx}} \right) $
+
+	We use linear model 
+	$\hat{\mathbf{y}} = \mathbf{X}\hat{\mathbf{b}}$  
+	to fit the four groups of data, where 
+	$\hat{\mathbf{b}} = (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}$,
+	and $\mathbf{X} = [\mathbf{1}, \mathbf{x}]$, $\mathbf{x}$ is the regressor of each group of data. 
+	Rewriting $\hat{\mathbf{b}}$ in scalar form: 
+	$\hat{\mathbf{b}} = \left( b_0,b_1 \right)^T $,
+	where $b_1 = \frac{S_{xy}}{S_{xx}} = \frac{\text{Cov}(\mathbf{x},\mathbf{y})}{\text{V}(\mathbf{x})}$ 
+	and $b_0 = \overline{y} - b_1 \overline{x}$. 
+	The coefficient of determination $R^2 =1-\frac{\text{SSR}}{\text{SST}} = 1 - \frac{\rVert \mathbf{y} - \hat{\mathbf{y}}\rVert^2}{\rVert \mathbf{y} - \overline{y}\cdot\mathbf{1}\rVert^2} $
+
+	\begin{table}[htpb]
+		\centering
+		\label{tab:1}
+		\begin{tabular}{|c|c|c|c|c|}
+			\hline
+			 & 1 & 2 & 3 & 4  \\
+			\hline
+			$b_0$ & 3.00 & 3.00 & 3.00 & 3.00  \\
+			\hline
+			$b_1$ & 0.50 & 0.50 & 0.50 & 0.50  \\
+			\hline
+			$R^2$ & 0.67 & 0.67 & 0.67 & 0.67  \\
+			\hline
+
+		\end{tabular}
+		\caption{simple linear model of 4 groups of data}
+	\end{table}
+
+	The mean of residuals are 0 for all four datasets; 
+	The variance of residuals are 1.37 for all four datasets; 
+
+\begin{figure}[htbp]
+\includegraphics[width=.7\textwidth]{anscombe.png}
+\centering
+\end{figure}
+
+\begin{figure}[htbp]
+\includegraphics[width=.7\textwidth]{histogram.png}
+\centering
+\end{figure}
+
+\begin{figure}[htbp]
+\includegraphics[width=.7\textwidth]{QQplot.png}
+\centering
+\end{figure}
+
+%	$S_{xx} = \sum \left( x_i - \overline{x} \right)^2 $,
+%	$S_{xy} = \sum \left( x_i - \overline{x} \right)\left( y_i - \overline{y} \right) $
+
+	
+
+	\section{Investigate Residuals}
+	
+		
+	\bibliography{cite}
+	
+\end{document}
+

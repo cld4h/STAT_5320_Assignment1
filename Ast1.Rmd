@@ -1,0 +1,187 @@
+---
+title: "Assignment1: The Three-Body Problem"
+author: "Hao"
+date: "2024-01-21"
+output: html_document
+---
+
+Loading the data
+```{r}
+data(anscombe)
+head(anscombe)
+```
+
+Fitting a Linear Model:
+```{r}
+lmod1 <- lm(y1~x1,anscombe)
+lmod2 <- lm(y2~x2,anscombe)
+lmod3 <- lm(y3~x3,anscombe)
+lmod4 <- lm(y4~x4,anscombe)
+```
+
+```{r}
+coef(lmod1)
+summary(lmod1)
+with(anscombe, plot(x1, y1, xlab = "x1", ylab = "y1", main = bquote(paste(italic(r), " = ",.(round(cor(x1, y1),2))))))
+```
+
+```{r}
+mean(residuals(lmod1))
+mean(residuals(lmod2))
+mean(residuals(lmod3))
+mean(residuals(lmod4))
+var(residuals(lmod1))
+var(residuals(lmod2))
+var(residuals(lmod3))
+var(residuals(lmod4))
+```
+
+
+```{r}
+library(ggplot2)
+plot1  <- ggplot(anscombe, aes(x = x1, y = y1)) + 
+	geom_point(alpha = 0.5) + 
+	geom_abline(aes(intercept = coef(lmod1)[1],slope = coef(lmod1)[2])) +
+	xlim(0,20)+
+	ylim(0,13)
+# or use geom_smooth(method = "lm", se = FALSE, col = 'red', lwd = 0.5)
+
+plot2  <- ggplot(anscombe, aes(x = x2, y = y2)) + 
+	geom_point(alpha = 0.5) + 
+	geom_abline(aes(intercept = coef(lmod2)[1],slope = coef(lmod2)[2])) +
+	xlim(0,20)+
+	ylim(0,13)
+
+plot3  <- ggplot(anscombe, aes(x = x3, y = y3)) + 
+	geom_point(alpha = 0.5) + 
+	geom_abline(aes(intercept = coef(lmod3)[1],slope = coef(lmod3)[2])) +
+	xlim(0,20)+
+	ylim(0,13)
+
+plot4  <- ggplot(anscombe, aes(x = x4, y = y4)) + 
+	geom_point(alpha = 0.5) + 
+	geom_abline(aes(intercept = coef(lmod4)[1],slope = coef(lmod4)[2])) +
+	xlim(0,20)+
+	ylim(0,13)
+
+library(grid)
+library(gridExtra)
+grid.arrange(grobs = list(plot1, plot2, plot3, plot4), ncol = 2, top = "Anscombe's Quartet")
+```
+
+```{r}
+histplot1  <- ggplot(anscombe,aes(x=residuals(lmod1)))+geom_histogram()+labs(x="r1")
+histplot2  <- ggplot(anscombe,aes(x=residuals(lmod2)))+geom_histogram()+labs(x="r2")
+histplot3  <- ggplot(anscombe,aes(x=residuals(lmod3)))+geom_histogram()+labs(x="r3")
+histplot4  <- ggplot(anscombe,aes(x=residuals(lmod4)))+geom_histogram()+labs(x="r4")
+
+grid.arrange(grobs = list(histplot1, histplot2, histplot3, histplot4), ncol = 2, top = "Histogram of Residuals")
+```
+
+```{r}
+rvfplot1  <- ggplot(anscombe,aes(x=predict(lmod1),y=residuals(lmod1))) + 
+		     geom_point()+ 
+		     coord_fixed(xlim = c(3.5, 11.5),ylim = c(-3,4)) +
+		     labs(x="fitted",y="residuals")
+rvfplot2  <- ggplot(anscombe,aes(x=predict(lmod2),y=residuals(lmod2))) + 
+		     geom_point()+ 
+		     coord_fixed(xlim = c(3.5, 11.5),ylim = c(-3,4)) +
+		     labs(x="fitted",y="residuals")
+rvfplot3  <- ggplot(anscombe,aes(x=predict(lmod3),y=residuals(lmod3))) + 
+		     geom_point()+ 
+		     coord_fixed(xlim = c(3.5, 11.5),ylim = c(-3,4)) +
+		     labs(x="fitted",y="residuals")
+rvfplot4  <- ggplot(anscombe,aes(x=predict(lmod4),y=residuals(lmod4))) + 
+		     geom_point()+ 
+		     coord_fixed(xlim = c(3.5, 11.5),ylim = c(-3,4)) +
+		     labs(x="fitted",y="residuals")
+grid.arrange(grobs = list(rvfplot1, rvfplot2, rvfplot3, rvfplot4), ncol = 2, top = "Residuals vs fitted values")
+```
+```{r}
+#mean(residuals(lmod1) <=residuals(lmod1))
+
+# n = length(anscombe$x1)
+# plot((1:n - 1)/(n - 1), sort(residuals(lmod1)), type="l",
+#   main = "Visualizing Residuals Percentiles",
+#   xlab = "Percentile",
+#   ylab = "Residuals")
+nqplot1  <- ggplot(anscombe,aes(x=(1:length(x1) - 1)/(length(x1) - 1),y=sort(residuals(lmod1)))) + 
+	geom_line()+ 
+#	geom_abline(aes(intercept = mean(residuals(lmod1)),slope = sd(residuals(lmod1))))+
+	geom_point()+ 
+	labs(x="Percentile",y="y1 Residuals")
+nqplot2  <- ggplot(anscombe,aes(x=(1:length(x2) - 1)/(length(x2) - 1),y=sort(residuals(lmod2)))) + 
+	geom_line()+ 
+#	geom_abline(aes(intercept = mean(residuals(lmod2)),slope = sd(residuals(lmod2))))+
+	geom_point()+ 
+	labs(x="Percentile",y="y2 Residuals")
+nqplot3  <- ggplot(anscombe,aes(x=(1:length(x3) - 1)/(length(x3) - 1),y=sort(residuals(lmod3)))) + 
+	geom_line()+ 
+	geom_point()+ 
+	labs(x="Percentile",y="y3 Residuals")
+nqplot4  <- ggplot(anscombe,aes(x=(1:length(x4) - 1)/(length(x4) - 1),y=sort(residuals(lmod4)))) + 
+	geom_line()+ 
+	geom_point()+ 
+	labs(x="Percentile",y="y4 Residuals")
+
+grid.arrange(grobs = list(nqplot1, nqplot2, nqplot3, nqplot4), ncol = 2, top = "Residuals Percentile Plots")
+```
+
+```{r}
+set.seed(200)
+n <- 100
+rn <- rnorm(n)
+plot((1:n - 1)/(n - 1), sort(rn), type="l",
+  main = "Visualizing Residuals Percentiles",
+  xlab = "Percentile",
+  ylab = "Residuals")
+```
+
+```{r}
+# importing libraries
+library(ggplot2)
+library(qqplotr)
+
+# creating random data
+random_values = rnorm(500, mean = 0, sd = 1)
+
+# plotting data with proper labels 
+# And adding line with proper properties
+ggplot(mapping = aes(sample = random_values)) + 
+	stat_qq_point(size = 2,color = "red") + 
+	stat_qq_line(color="green") +
+	xlab("x-axis") + 
+	ylab("y-axis")
+```
+
+Normality check
+https://sscc.wisc.edu/sscc/pubs/RegDiag-R/normality.html
+```{r}
+ggplot() +
+  geom_qq(aes(sample = rstandard(lmod1))) +
+  geom_abline(color = "red") +
+  coord_fixed()
+```
+
+
+```{r}
+rqqplot1 <- ggplot() + 
+	geom_qq(aes(sample = rstandard(lmod1))) + 
+	geom_abline(color = "red") + 
+	coord_fixed(xlim = c(-3, 3),ylim = c(-3,3))
+rqqplot2 <- ggplot() + 
+	geom_qq(aes(sample = rstandard(lmod2))) + 
+	geom_abline(color = "red") + 
+	coord_fixed(xlim = c(-3, 3),ylim = c(-3,3))
+rqqplot3 <- ggplot() + 
+	geom_qq(aes(sample = rstandard(lmod3))) + 
+	geom_abline(color = "red") + 
+	coord_fixed(xlim = c(-3, 3),ylim = c(-3,3))
+rqqplot4 <- ggplot() + 
+	geom_qq(aes(sample = rstandard(lmod4))) + 
+	geom_abline(color = "red") + 
+	coord_fixed(xlim = c(-3, 3),ylim = c(-3,3))
+grid.arrange(grobs = list(rqqplot1, rqqplot2, rqqplot3, rqqplot4), ncol = 2, top = "Q-Q plots")
+```
+
+
