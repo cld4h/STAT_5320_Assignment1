@@ -105,25 +105,27 @@ Detailed calculation results are available in Table~\ref{tab:1}. Notably, it is 
 	
 	\section{Residuals Analysis}
 	
-	The mean of residuals are 0 for all four datasets; 
-	The variance of residuals are 1.37 for all four datasets; 
+%	In this section, we focused on the residuals. The mean of residuals are 0 for all four datasets; The variance of residuals are 1.37 for all four datasets; Figure~\ref{Fig:QQplot} gives the Q-Q plots of each dataset. It is used to examine if the residuals are normal distributed. Ideally, they should fall into the diagnal red line. However, we can see that residuals from dataset 2 are heavy-tailed and the residuals from dataset 3 are right-skewed. This can also be observed in Figure~\ref{Fig:Histogram}.
 		
-
-
+In this section, our emphasis lies on the examination of residuals. Notably, the mean of residuals is 0 across all four datasets, while the variance remains around 1.37. Figure~\ref{Fig:QQplot} presents Q-Q plots for each dataset, serving as a tool to assess the normal distribution of residuals. Ideally, these points should align along the diagonal red line. However, it is evident that residuals from dataset 2 exhibit a heavy-tailed distribution, and those from dataset 3 demonstrate a right-skewed pattern, as further illustrated in Figure~\ref{Fig:Histogram}.
 
 \begin{figure}[htbp]
-\includegraphics[width=.7\textwidth]{QQplot.png}
+\includegraphics[width=.8\textwidth]{QQplot.png}
 \centering
-\caption{Q-Q plots}
-\label{Fig:qqplot}
+\caption{Q-Q Plots for Residuals: Comparison of Normal Distribution Fit Across Datasets.}
+\label{Fig:QQplot}
 \end{figure}
 
 \begin{figure}[htbp]
 \includegraphics[width=.7\textwidth]{histogram.png}
 \centering
-\caption{Histogram of Residuals}
-\label{Fig:histogram}
+\caption{Histograms of Residuals}
+\label{Fig:Histogram}
 \end{figure}
+
+\newpage
+The Residuals vs Fitted Values plot (Figure~\ref{Fig:RVF}) serves as a diagnostic tool for assessing the linearity of the relationship between $x$ and $y$. An ideal scenario is characterized by residuals being evenly dispersed around the fitted values of $y$, akin to the pattern observed in Dataset 1. Deviations from this pattern, such as diminishing (or amplifying) residuals with increasing $y$ (as seen in Dataset 3) or the presence of a quadratic curve pattern as $y$ increases (as evident in Dataset 2), may indicate a non-linear association between $x$ and $y$.
+%The Residuals vs Fitted values plot demonstrates whether there is a linear relationship between $x$ and $y$. Ideally, we would like to see that the residuals are evenly distributed across the fitted value of $y$ (like Dataset 1). If residuals become smaller (or larger) as $y$ increases (like Dataset 3), or if residuals shows quadratic curve pattern as $y$ increases (Dataset 2), it might indicate a non-linear relationship between $x$ and $y$.
 
 \begin{figure}[htbp]
 \includegraphics[width=.7\textwidth]{RVF.png}
@@ -132,13 +134,16 @@ Detailed calculation results are available in Table~\ref{tab:1}. Notably, it is 
 \label{Fig:RVF}
 \end{figure}
 
+The Residuals vs Leverage plot (Figure \ref{Fig:RVL}) illustrates the impact of extreme data points. While both Datasets 3 and 4 contain outliers, it is noteworthy that the outlier in Dataset 4 exerts the most significant leverage on our fitted model.
+
 \begin{figure}[htbp]
 \includegraphics[width=.7\textwidth]{RVL.png}
 \centering
 \caption{Residuals vs Leverage plots}
 \label{Fig:RVL}
 \end{figure}
-	\bibliography{cite}
+
+\bibliography{cite}
 
 	
 \end{document}
