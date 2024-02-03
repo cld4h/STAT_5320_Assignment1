@@ -78,7 +78,7 @@ The scatter plot in Figure~\ref{Fig:anscombe} illustrates datasets 1 through 4 w
 
 We employ a simple linear model, denoted as $\hat{\mathbf{y}} = \mathbf{X}\hat{\mathbf{b}}$, to fit the four distinct datasets. Here, the parameter vector $\hat{\mathbf{b}}$ is determined using the formula $\hat{\mathbf{b}} = (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}$, with $\mathbf{X} = [\mathbf{1}, \mathbf{x}]$ and $\mathbf{x}$ representing the regressor for each dataset. Expressing $\hat{\mathbf{b}}$ in scalar form as $\hat{\mathbf{b}} = \left( b_0,b_1 \right)^T$, we know that $b_1 = \frac{S_{xy}}{S_{xx}} = \frac{\text{Cov}(\mathbf{x},\mathbf{y})}{\text{Var}(\mathbf{x})}$ and $b_0 = \overline{y} - b_1 \overline{x}$. The coefficient of determination is computed as $R^2 = 1-\frac{\text{SSR}}{\text{SST}} = 1 - \frac{\rVert \mathbf{y} - \hat{\mathbf{y}}\rVert^2}{\rVert \mathbf{y} - \overline{y}\cdot\mathbf{1}\rVert^2}$. 
 
-Detailed calculation results are available in Table~\ref{tab:1}. Notably, it is observed that all four models yield identical parameters and $R^2$ values. This observation is not surprising, given that the mean, variance, and covariance of both $x$ and $y$ across each dataset are the same.
+Detailed calculation results are available in Table~\ref{tab:1}. Notably, all four models yield identical parameters and $R^2$ values. This observation is not surprising, given that the mean, variance, and covariance of both $x$ and $y$ across each dataset are the same.
 
 	\begin{table}[htpb]
 		\centering
